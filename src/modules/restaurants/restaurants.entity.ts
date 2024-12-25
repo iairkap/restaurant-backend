@@ -15,7 +15,7 @@ export class Restaurants {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => User, (user) => user.restaurants) // Relación con el usuario (propietario)
+  @ManyToOne(() => User, (user) => user.restaurants, { nullable: false })
   user: User;
 
   @OneToMany(() => Menu, (menu) => menu.restaurant) // Relación con los menus
@@ -23,6 +23,9 @@ export class Restaurants {
 
   @OneToMany(() => Order, (order) => order.restaurant) // Relación con pedidos
   orders: Order[];
+
+  @Column({ type: 'varchar', array: true, nullable: true })
+  picture: string[];
 
   @Column({ length: 255 })
   name: string;

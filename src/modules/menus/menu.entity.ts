@@ -17,8 +17,13 @@ export class Menu {
   @Column({ type: 'varchar', length: 255 })
   name: string;
 
-  @ManyToOne(() => Restaurants, (restaurant) => restaurant.menus)
+  @ManyToOne(() => Restaurants, (restaurant) => restaurant.menus, {
+    nullable: false,
+  })
   restaurant: Restaurants;
+
+  @Column({ type: 'varchar', array: true, nullable: true })
+  picture: string[];
 
   @OneToMany(() => Dish, (dish) => dish.menu)
   dishes: Dish[];
