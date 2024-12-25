@@ -1,18 +1,20 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import * as dotenv from 'dotenv';
 import { RestaurantsModule } from './modules/restaurants/restaurants.module';
-
+import { UserModule } from './modules/users/user.module';
+import { OrderModule } from './modules/orders/order.module';
+import { DishModule } from './modules/dish/dish.module';
+import { MenuModule } from './modules/menus/menu.module';
+import { User } from './modules/users/user.entity';
+import { Order } from './modules/orders/order.entity';
+import { Restaurants } from './modules/restaurants/restaurants.entity';
+import { Dish } from './modules/dish/dish.entity';
+import { FireBaseAdminModule } from './modules/firebase/fireBaseAdmin.module';
+import { TestModule } from './modules/firebase/test.module';
 dotenv.config();
-
-console.log('Database Host:', process.env.DATABASE_HOST);
-console.log('Database Port:', process.env.DATABASE_PORT);
-console.log('Database User:', process.env.DATABASE_USER);
-console.log('Database Password:', process.env.DATABASE_PASSWORD);
-console.log('Database Name:', process.env.DATABASE_NAME);
 
 @Module({
   imports: [
@@ -21,18 +23,20 @@ console.log('Database Name:', process.env.DATABASE_NAME);
     }),
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: process.env.DATABASE_HOST,
-      port: +process.env.DATABASE_PORT,
-      username: process.env.DATABASE_USER,
-      password: process.env.DATABASE_PASSWORD,
-      database: process.env.DATABASE_NAME,
+      url: process.env.DATABASE_URL,
+      entities: [User, Order, Restaurants, Dish],
       autoLoadEntities: true,
       synchronize: true, // Cambiar a false en producción
     }),
     RestaurantsModule,
+    UserModule,
+    OrderModule,
+    DishModule,
+    MenuModule,
+    FireBaseAdminModule,
+    TestModule,
   ],
-
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}

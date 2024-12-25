@@ -8,6 +8,7 @@ import {
 } from 'typeorm';
 import { Restaurants } from '../restaurants/restaurants.entity';
 import { Order } from '../orders/order.entity';
+
 export enum UserRole {
   ADMIN = 'admin',
   RESTAURANT_OWNER = 'restaurant_owner',
