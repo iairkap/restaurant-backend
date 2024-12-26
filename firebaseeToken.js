@@ -17,7 +17,6 @@ admin
   .auth()
   .verifyIdToken(customToken) // Aquí estamos verificando el ID Token
   .then((decodedToken) => {
-    console.log('Token Decodificado:', decodedToken);
     // Puedes enviar la respuesta a tu backend con el token decodificado si es necesario
   })
   .catch((error) => {

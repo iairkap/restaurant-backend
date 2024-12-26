@@ -6,7 +6,7 @@ async function generateTestToken() {
 
   try {
     const customToken = await admin.auth().createCustomToken(uid);
-    console.log('Token JWT generado:', customToken);
+
     return customToken;
   } catch (error) {
     console.error('Error generando el token JWT:', error);

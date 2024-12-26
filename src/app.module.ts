@@ -15,6 +15,7 @@ import { Dish } from './modules/dish/dish.entity';
 import { TestModule } from './modules/firebase/test.module';
 import { FirebaseAuthService } from './auth/firebase-auth.service';
 import { FirebaseAuthMiddleware } from './middleware/firebase-auth.middleware';
+import { OpeningHours } from './modules/opening-hours/opening-hours.entity';
 dotenv.config();
 
 @Module({
@@ -25,7 +26,7 @@ dotenv.config();
     TypeOrmModule.forRoot({
       type: 'postgres',
       url: process.env.DATABASE_URL,
-      entities: [User, Order, Restaurants, Dish],
+      entities: [User, Order, Restaurants, Dish, OpeningHours],
       autoLoadEntities: true,
       synchronize: true, // Cambiar a false en producción
     }),

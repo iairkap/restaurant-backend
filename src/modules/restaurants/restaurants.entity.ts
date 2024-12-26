@@ -10,6 +10,7 @@ import {
 import { User } from '../users/user.entity';
 import { Menu } from '../menus/menu.entity';
 import { Order } from '../orders/order.entity';
+import { OpeningHours } from '../opening-hours/opening-hours.entity';
 @Entity()
 export class Restaurants {
   @PrimaryGeneratedColumn()
@@ -26,6 +27,11 @@ export class Restaurants {
 
   @Column({ type: 'varchar', array: true, nullable: true })
   picture: string[];
+
+  @OneToMany(() => OpeningHours, (openingHours) => openingHours.restaurant, {
+    cascade: true, // Propaga cambios automáticamente
+  })
+  openingHours: OpeningHours[];
 
   @Column({ type: 'varchar', nullable: false })
   cuisine_type: string;

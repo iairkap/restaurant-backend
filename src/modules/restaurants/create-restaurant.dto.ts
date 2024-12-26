@@ -13,6 +13,9 @@ export class CreateRestaurantDto {
   description: string;
 
   @IsNotEmpty()
+  cuisine_type: string;
+
+  @IsNotEmpty()
   @IsString()
   address: string;
 
