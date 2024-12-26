@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, RequestMethod } from '@nestjs/common';
 
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
@@ -41,6 +41,10 @@ dotenv.config();
 })
 export class AppModule {
   configure(consumer) {
-    consumer.apply(FirebaseAuthMiddleware).forRoutes('users');
+    consumer
+      .apply(FirebaseAuthMiddleware) // Aplica el middleware
+      .forRoutes(
+        { path: 'users/email/:email', method: RequestMethod.GET }, // Solo para esta ruta
+      );
   }
 }
