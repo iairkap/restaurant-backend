@@ -45,6 +45,7 @@ export class AppModule {
       .apply(FirebaseAuthMiddleware) // Aplica el middleware
       .forRoutes(
         { path: 'users/email/:email', method: RequestMethod.GET }, // Solo para esta ruta
+        { path: 'restaurants', method: RequestMethod.POST },
       );
   }
 }

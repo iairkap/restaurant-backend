@@ -27,6 +27,9 @@ export class Restaurants {
   @Column({ type: 'varchar', array: true, nullable: true })
   picture: string[];
 
+  @Column({ type: 'varchar', nullable: false })
+  cuisine_type: string;
+
   @Column({ length: 255 })
   name: string;
 

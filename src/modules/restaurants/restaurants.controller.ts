@@ -1,7 +1,15 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Req,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { RestaurantService } from './restaurants.service';
 import { CreateRestaurantDto } from './create-restaurant.dto';
 import { Restaurants } from './restaurants.entity';
+import { Request } from 'express';
 
 @Controller('restaurants')
 export class RestaurantsController {
@@ -13,7 +21,13 @@ export class RestaurantsController {
   }
 
   @Post()
-  create(@Body() data: CreateRestaurantDto): Promise<Restaurants> {
+  create(
+    @Body() data: CreateRestaurantDto,
+    @Req() req: Request,
+  ): Promise<Restaurants> {
+    if (!req.user) {
+      throw new UnauthorizedException('User not authenticated');
+    }
     return this.restaurantService.create(data);
   }
 }
