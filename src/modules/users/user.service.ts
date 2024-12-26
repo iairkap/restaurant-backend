@@ -26,10 +26,19 @@ export class UserService {
     });
   }
 
-  create(createUserDto: CreateUserDto): Promise<User> {
+  async create(createUserDto: CreateUserDto): Promise<User> {
+    const existingUser = await this.userRepository.findOne({
+      where: [{ uid: createUserDto.uid }, { email: createUserDto.email }],
+    });
+
+    if (existingUser) {
+      return existingUser; // Return the existing user if found
+    }
+
     const user = this.userRepository.create(createUserDto);
     return this.userRepository.save(user);
   }
+
   async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
     await this.userRepository.update(id, updateUserDto);
     return this.userRepository.findOne({ where: { id } });

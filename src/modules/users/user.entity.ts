@@ -20,8 +20,14 @@ export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Column({ type: 'varchar', length: 255 })
+  uid: string;
+
   @Column({ type: 'varchar', length: 255, unique: true })
   email: string;
+
+  @Column({ type: 'varchar', length: 255, nullable: true })
+  name: string;
 
   @Column({ type: 'enum', enum: UserRole })
   role: UserRole;
