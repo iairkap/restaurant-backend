@@ -12,8 +12,9 @@ import { User } from './modules/users/user.entity';
 import { Order } from './modules/orders/order.entity';
 import { Restaurants } from './modules/restaurants/restaurants.entity';
 import { Dish } from './modules/dish/dish.entity';
-import { FireBaseAdminModule } from './modules/firebase/fireBaseAdmin.module';
 import { TestModule } from './modules/firebase/test.module';
+import { FirebaseAuthService } from './auth/firebase-auth.service';
+import { FirebaseAuthMiddleware } from './middleware/firebase-auth.middleware';
 dotenv.config();
 
 @Module({
@@ -33,10 +34,13 @@ dotenv.config();
     OrderModule,
     DishModule,
     MenuModule,
-    FireBaseAdminModule,
     TestModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [FirebaseAuthService],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer) {
+    consumer.apply(FirebaseAuthMiddleware).forRoutes('users');
+  }
+}

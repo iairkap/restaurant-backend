@@ -6,9 +6,12 @@ import {
   Delete,
   Param,
   Body,
+  Req,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto, UpdateUserDto } from './user.dto';
+import { Request } from 'express';
 
 @Controller('users')
 export class UserController {
@@ -22,6 +25,13 @@ export class UserController {
   @Get(':id')
   findOne(@Param('id') id: number) {
     return this.userService.findOne(id);
+  }
+  @Get('email/:email')
+  findByEmail(@Param('email') email: string, @Req() req: Request) {
+    if (!req.user) {
+      throw new UnauthorizedException('User not authenticated');
+    }
+    return this.userService.findByEmail(email);
   }
 
   @Post()
