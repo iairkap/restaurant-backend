@@ -44,6 +44,12 @@ export class UserService {
     return this.userRepository.findOne({ where: { id } });
   }
 
+  async updateName(uid: string, name: string): Promise<{ affected: number }> {
+    const result = await this.userRepository.update({ uid }, { name });
+
+    return { affected: result.affected || 0 };
+  }
+
   async remove(id: number): Promise<void> {
     await this.userRepository.delete(id);
   }
